@@ -1,0 +1,110 @@
+### VERSION CONTROL ###
+
+- Allows us to revert back to previous versions
+- Allows us to have branches, built simultaneously and then brought together
+- Should be used as a team or alone
+
+### GIT ###
+
+- Most common version control system
+
+mkdir gitDir #create directory
+cd gitDir #move to directory
+echo "Git is Awesome" > gitText #create a file with "Git is Awesome" in it
+git init #initialises empty git repository - a repository is a directory with files that are "under version control"
+(((gitDir git:(main) shows in shell)))
+git add gitText #adds gitText file to the repository
+git commit -m "First commit" #commits the change with a message
+
+When you run 'git init', git creates a hidden directory called .git that it uses to track all changes to the files in the directory
+rm -rf .git - remove version control if you have placed in wrong place
+FIRST THING TO DO WITH A NEW PROJECT IS CREATE A DIRECTORY, CHANGE INTO IT AND PLACE IT UNDER VERSION CONTROL
+
+commit is like checkpoint - you save a checkpoint
+Need to specify which files are being committed
+You only add the files you may want to return to to the staging area
+Tell git you are happy with the file as it is now, and we'd like to create a 'checkpoint' (or commit) that we could go to in case we ever want to.
+
+git commit -m 'First commit'
+commits all files in staging area with a name 'First commit'
+
+git status - checks status
+git log - view log of changes
+rm gitText - delete file
+git rm gitText - adds the removal of a file to staging
+
+git checkout (hash number of commit) - takes us to when we first committed. 
+git checkout main - back to main, current branch
+
+### Linking to Github ###
+
+git remote -v = shows remote set ups
+git remote add (link to repository) = sets up remote from local to public repository
+git push -u origin main = pushes local repository to github 
+-u sets the above to fault so you can just do git push for any more pushes in repository
+
+### Git workflow ###
+
+We created a folder for a new project
+We initialised a repository inside it
+We created some files
+We added them to the staging area
+We committed them
+We created a repo on GitHub
+We created a remote called "origin" pointing to GitHub
+We pushed the code to the origin
+
+### Pulling code from Github ###
+
+git pull origin main
+git pull = can just do this if -u setup with origin main 
+
+### When and how to commit ###
+
+"commit early, commit often"
+Meaningful change = make a commit
+Don't have to push to github straight away
+Commit log should document the development of the project ie:
+
+Initial commit (added a README file)
+Added an empty web page
+Put a welcome message on the page
+Added a header with a logo
+Added a footer with a few links
+Added /contact-us page
+
+### File organisation ###
+
+Separate directory initialised as a git repo for every project
+
+### Cloning Repositories from GitHub ###
+
+git clone - to get someone else's repository from GitHub
+forking - duplicating an entire repository and its history up to that point to your own github account
+You can then submit pull requests to help improve other people's projects by offering your suggested changes to the original repo
+
+### GitHub Collaboration ###
+
+Pair partner Alice creates a project repo on their computer. For example, fizbuzz.
+Alice makes a commit.
+Alice creates a fizbuzz repo on GitHub.
+Alice pushes her commit to her GitHub repo.
+Alice invites pair partner Bob as a collaborator on her GitHub repo.
+Bob accepts the invitation. (This is important - it lets Bob get his green contribution squares.)
+Bob clones (not forks) Alice's repository.
+Bob can add commits to his clone and push them to Alice's GitHub rep
+
+The next day
+Bob is now working with a new pair partner, Chetna.
+Bob creates a fizbuzz-2 repo on his GitHub account.
+Bob changes the origin remote on his local clone from the day before to point at his fizbuzz-2 repo on GitHub.
+Bob can now push new commits from his local clone to fizbuzz-2.
+Bob adds Chetna as a collaborator. She can now clone and contribute to his repo.
+
+### Git Branching ###
+
+Pointers to a snapshot of your changes.
+Create a branch to encapsulate your changes. 
+Makes it harder for unstable code to get merged into the main branch.
+Allows you to work on different features or bugs independently.
+A branch is an independent line of development.

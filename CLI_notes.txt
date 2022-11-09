@@ -1,0 +1,215 @@
+### Basic Commands
+
+~ = home directory
+ls = lists files
+ls -lA = show all files, including hidden in long format
+
+cd PATH = change PATH
+cd .. = move back one directory
+cd . = represents the directy you are in
+cd = returns to home directory
+pwd = print working directory
+
+touch = create file
+mkdir = create a directory
+rmdir = remove a directory
+rm = remove a file
+rm -r [directory] = recursively remove all files and directory
+rm -i = prompts you to confirm to delete file
+rm -f = force removal of files
+
+cp [original] [target] = copy file to another one
+mv [Path/originalfile] [Path/newfile]
+
+cat [file] = view text from file in terminal
+cat > [file] = add text to a file
+>> = append, > = overwrite
+cat [file1] [file2] > [file3] = combine two files into a new file
+less [file] = read large amount of text and have scroll function
+head -(n) [file] = read (n) amount of lines from the top of a file
+tail -(n) [file] = read (n) amount of lines from the bottom of a file
+tail -f [file] = see any new lines being added to a file
+
+man [command] = shows list of parameters of a command
+
+### Intermediate Commands
+
+Every program has at least three "standard" streams.
+Streams are how a program sends outputs and receives inputs.
+
+The keyboard is referred to as an input stream. By reading from the input stream your program can read what you have typed on the keyboard.
+The screen is referred to as an output stream. By sending data to the output stream, a program can print something on the screen.
+There is also an error stream that is usually sent to the display as well but is used only to print error messages.
+
+The input stream is usually called stdin and has number 0. The output stream is stdout (#1) and the error stream is called stderr (#2).
+
+### Pipes and Redirection - pipes allow you to redirect streams
+
+cat combined | less = passes the output of cat combined to the input of less
+| = pipe
+
+ls -lA | less = takes the output of listing all files and passes it to less
+cat combined > newCombined = > writes the output of the command on the left to the file on the right
+
+Wildcards = having more control over what you display
+ls *.txt = show a list of all .txt files
+ls new*.txt = show a list of all txt files with the word new in the title
+ls * = show all txt files
+ls *n* = show all txt files with the letter n in their titles
+
+find . -name "*.txt" -print = show all txt file titles in your current directory
+cd ~ find . -name "*.txt" -print = show all .txt files in your home directory
+
+grep binary [file] = will show all lines with the word binary in it for a specific file
+find ~ -name "*.txt" -print | grep README = find all .txt files, direct them to grep, and print only filenames with readme in them
+
+### Regular Expressions - regex = describes a pattern you are looking for
+
+find ~/Documents -name "*" -print | grep "\d\+" = show titles of all files with numbers (digits)
+https://regexr.com/ = to find other regex
+
+wc [file] = gives us line, word and character counts for a file
+find ~ -name "*.txt" -print | grep README | wc -l = shows how many readme files we have in the home directory. wc -l counts how many lines were given to it
+
+### Permissions - control the access to every file on computer
+
+whoami = displays username
+
+Three classes of permissions with unix:
+"user" - determines the permissions the owner of the file has. Every file has at most one owner.
+"group" - determines permissions thath apply to a group of user. Any user can belong to one or more groups.
+"others" - applies to all users that don't fall into other two classes
+Every class has three permissions:
+"read" - allows a file to be read. Allows the contents of a directory to be listed
+"write" - allows writing to a file, or, in case of a directory, it allows creating, deleting and renaming files
+"execute" - allows a file to be executed. A file can't be run without execute permission. A directory with execute will allow you to access files if the file permissions allow and you know the names.
+
+Permissions are not inherited - if a directory is read, it does not mean the files are read
+
+ls -l = view permissions of files
+➜  SomeDir ls -l
+total 48
+-rw-r--r--@ 1 abod  staff    91  7 Nov 13:44 combined
+-rw-r--r--@ 1 abod  staff  3003  7 Nov 13:45 longText.txt
+-rw-r--r--@ 1 abod  staff     0  7 Nov 16:39 new1.txt
+-rw-r--r--@ 1 abod  staff    91  7 Nov 16:37 newCombined
+-rw-r--r--@ 1 abod  staff     0  7 Nov 13:24 newerFile
+-rw-r--r--@ 1 abod  staff     0  7 Nov 13:22 someFile
+-rw-r--r--@ 1 abod  staff    49  7 Nov 13:43 someMoreText
+-rw-r--r--@ 1 abod  staff    42  7 Nov 13:40 someText
+-rw-r--r--@ 1 abod  staff    82  7 Nov 15:12 someText.txt
+-rw-r--r--@ 1 abod  staff     0  7 Nov 15:23 test_file.txt
+
+First letter = type of file, - for file, d for directory
+Then three groups of three characters: rw-r--r--
+r=read, w=write, x=execute
+Group 1 = permissions of user class, above shows read/write for abod but not execute
+Group 2 = permissions of group class, above shows just read permission
+Group 3 = permissions of other class, above shows just read permission
+
+### Changing permissions - chmod ###
+
+chmod u+w readme.txt = gives user write permissions
+u = user, g = group, o = other, a = all
+
+chmod a-rx readme.txt = remove (-) read and execute for all
+
+### Advanced Commands ###
+
+### Shebang = tells computer what program to use to execute a script
+It is a combination of a hash ('sh) and an exclamation mark (bang) followed by the path to the interpreter, placed on the very first line of the file.
+
+cat > hello.rb      Created a file called hello.rb and prompts for text
+puts "Hello, world!"
+^C
+
+cat hello.rb (outputs puts "Hello, world!")
+ruby hello.rb (outputs: Hello, world!)
+which ruby - shows where ruby interpreter is
+
+Option 1(only works on this computer):
+#!(path) = shebang. Tells bash where the interpreter is. Add it to top of script.
+#!/Users/abod/.rvm/rubies/ruby-3.1.0/bin/ruby
+./hello.rb = with the shebang added to the file (above), you can run the programme with ./hello.rb in terminal
+
+Option 2(better and portable):
+#!/usr/bin/env ruby
+
+### Superuser mode ###
+
+name of superuser = root
+superuser has all rights and permissions to all programs
+BE WARNED
+rm -rf ./* = delete all files in current directory
+rm -rf /* = delete all files on hard drive!!!
+
+sudo = execute command as superuser
+sudo rm inaccessibleFile = delete file you don't have permissions to if you have sudo password
+
+### Environment ###
+
+Working with the command line = operating in an Environment
+ie command line knows where home folder is, where ruby is, what your username is
+environment variables (env vars) = where the above information is stored
+env = show env vars
+HOME=/Users/abod    Every line is a key/value pair
+All programs have access to env vars
+echo $HOME = show value of HOME key (home directory)
+
+### Echo ###
+
+echo = prints whatever text you give it on the screen
+echo "Hello"        prints Hello
+Can be used to view env vars (see above)
+Can be used to save short strings to file. ie create a file with text "Hello, world!"
+echo "Hello, world" > hello.txt
+
+PATH - env variables
+PATH is a colon-separated list of directories where the shell will be looking for programs you ask it to run
+echo $PATH = shows path
+When you type ruby, shell looks through all the PATHS to find it
+If can't run installed software, double check PATH variable is set correctly
+
+### Setting environment variables ###
+
+export SEASON=winter - sets an environmental variable called season with a value of winter
+
+export PATH=$PATH:/Users/makers - modifies PATH, adds a directory at end of path
+Common reason for modifying environment variables is for storing sensitive data eg. passwords
+
+export SECRET_KEY=12345abcde
+secret_key = ENV['SECRET_KEY']
+
+### Profile Files ###
+
+Environment variables only last until a new shell starts
+Profile files are used to keep them in new shell sessions.
+A shell is an application which is a command line interface
+
+echo "export SEASON=winter" >> ~/.zshrc - adds env var to zsh environment
+>> = append > = overwrite
+
+### Processes ###
+
+Every program running is composed of at least one 'process'
+Process is simply code that is being executed (hasn't finished yet)
+Simple programs usually launch just one process
+Sometimes they can launch several processes in parallel
+
+ps = shows processes you launched
+ps x = all processes running on computer
+
+### Vim ###
+
+Often you only have a text-only command line to use ie with a remote system
+Some systems won't have text-based editors to make changes
+Most systems have vi or vim (vim = improved) installed. This is an editor on any unix-based system.
+vim myFile = creates a new file
+vim starts in a command mode, not an insert mode
+i - insert text before cursor
+o - open a new line after the current one
+dd - delete current line
+esc - get back to command mode
+:w = 'write' or save
+:q = quit editor
+:q! = quit without saving
