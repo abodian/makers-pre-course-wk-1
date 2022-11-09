@@ -39,7 +39,7 @@ git checkout main - back to main, current branch
 ### Linking to Github ###
 
 git remote -v = shows remote set ups
-git remote add (link to repository) = sets up remote from local to public repository
+git remote add origin (link to repository) = sets up remote from local to public repository
 git push -u origin main = pushes local repository to github 
 -u sets the above to fault so you can just do git push for any more pushes in repository
 
@@ -108,3 +108,11 @@ Create a branch to encapsulate your changes.
 Makes it harder for unstable code to get merged into the main branch.
 Allows you to work on different features or bugs independently.
 A branch is an independent line of development.
+
+git branch allows you to see brances you have hlocally
+
+git branch lets you create, list, rename and delete brances 
+
+git checkout allows you to switch between branches
+
+git merge allows you to combine multiple sequences of commits made in your new brack back into one unified history in the main
